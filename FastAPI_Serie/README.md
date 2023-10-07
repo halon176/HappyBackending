@@ -10,7 +10,7 @@ Materiale di supporto per la serie di introduzione a FastAPI
 |----|--------------------------------------------------------------|------------|
 | 0  | [Introduzione FastApi](https://youtu.be/OvOSOO6PR3k)         | 26/09/2023 |
 | 1  | [Endpoint e Architettura REST](https://youtu.be/uXqpSg4ZVv8) | 03/10/2023 |
-| 2  | Pydentic: Validazione dei Dati                               | 10/10/2023 |
+| 2  | Pydantic: Validazione dei Dati                               | 10/10/2023 |
 | 3  | Struttura del progetto e Git                                 | 17/10/2023 |
 | 4  | Alembic: Database e Migrazioni                               | 24/10/2023 |
 | 5  | SQLAlchemy e interrogazioni, CRUD                            | 31/10/2023 |
