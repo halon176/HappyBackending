@@ -20,7 +20,7 @@ Materiale di supporto per la serie di introduzione a FastAPI
 | 9  | Websocket                                                      | 28/11/2023 |
 | 10 | Gestione delle Dipendenze                                      | 05/12/2023 |
 | 11 | Celery: gestione processi background                           | 12/12/2023 |
-| 12 | Testing                                                        | 12/12/2023 |
-| 13 | Deploy Docker Compose                                          | 19/12/2023 |
+| 12 | Testing                                                        | 19/12/2023 |
+| 13 | Deploy Docker Compose                                          | 26/12/2023 |
 
 Praticamente si mangia il panettone insieme 🎄
