@@ -1,0 +1,5 @@
+# lancio di celery worker
+celery -A src.tasks.tasks:celery worker --loglevel=INFO --pool=solo
+
+# lancio di interfaccia web flower, raggiungibile su http://localhost:5555
+celery -A src.tasks.tasks:celery flower
