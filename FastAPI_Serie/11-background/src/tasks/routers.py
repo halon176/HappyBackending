@@ -11,8 +11,8 @@ router = APIRouter(prefix="/report")
 
 
 @router.get("/user")
-async def get_dashboard_report(background_tasks: BackgroundTasks, session: AsyncSession = Depends(get_async_session),
-                               user_id: int = Depends(JWTBearer())):
+async def get_user_report(background_tasks: BackgroundTasks, session: AsyncSession = Depends(get_async_session),
+                          user_id: int = Depends(JWTBearer())):
     query = select(User).where(User.id == user_id)
     user: User = await session.scalar(query)
 
