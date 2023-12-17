@@ -11,8 +11,8 @@ router = APIRouter(prefix="/report")
 
 
 @router.get("/user")
-async def get_user_report(background_tasks: BackgroundTasks, session: AsyncSession = Depends(get_async_session),
-                          user_id: int = Depends(JWTBearer())):
+async def get_dashboard_report(background_tasks: BackgroundTasks, session: AsyncSession = Depends(get_async_session),
+                               user_id: int = Depends(JWTBearer())):
     query = select(User).where(User.id == user_id)
     user: User = await session.scalar(query)
 
@@ -20,8 +20,8 @@ async def get_user_report(background_tasks: BackgroundTasks, session: AsyncSessi
     # send_email_report_dashboard(user.__json__())
 
     # comando di esecuzione con BackgroundTasks di fastapi
-    background_tasks.add_task(send_email_report_dashboard, user.__json__())
+    #background_tasks.add_task(send_email_report_dashboard, user.__json__())
 
     # comando di esecuzione con Celery, lui lo serializza da solo ma se anche qui aggiungete __json__() non cambia
-    # send_email_report_dashboard.delay(user)
+    send_email_report_dashboard.delay(user)
     return {"message": "La richiesta è stata accettata e la mail verrà inviata a breve."}
