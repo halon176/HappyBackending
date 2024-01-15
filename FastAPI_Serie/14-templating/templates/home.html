@@ -1,0 +1,31 @@
+<html>
+<head>
+    <title>Event Details</title>
+    <link href="/static/styles.css" rel="stylesheet">
+</head>
+<body>
+    <h1>Elenco degli eventi</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Data</th>
+                <th>Location</th>
+                <th>Capacità</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for event in events %}
+                <tr>
+                    <td>{{ event.name }}</td>
+                    <td>{{ event.date }}</td>
+                    <td>{{ event.location }}</td>
+                    <td>{{ event.capacity }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</body>
+</html>
