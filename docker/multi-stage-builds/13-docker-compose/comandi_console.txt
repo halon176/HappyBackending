@@ -1,0 +1,9 @@
+# build container con il tag
+docker build -t app .
+
+# avvio container con uscita su localhost
+docker run \
+  -p 8000:8000 \
+  --env-file env.docker \
+  --add-host=host.docker.internal:host-gateway \
+  app
