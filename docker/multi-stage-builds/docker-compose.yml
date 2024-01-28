@@ -1,0 +1,53 @@
+version: "3.9"
+services:
+  db:
+    image: postgres:15
+    container_name: db_app
+    command: -p 1221
+    expose:
+      - 1221
+    env_file:
+      - deploy.env
+
+  redis:
+    image: redis:7
+    container_name: redis_app
+    command: --port 5370
+    expose:
+      - 5370
+
+  app:
+    build:
+      context: 13-docker-compose
+    env_file:
+      - deploy.env
+    container_name: eventone_app
+    command: ["/deploy/app.sh"]
+    ports:
+      - "9999:8000"
+    depends_on:
+      - db
+      - redis
+
+  celery:
+    build:
+      context: 13-docker-compose
+    env_file:
+      - deploy.env
+    container_name: celery_app
+    command: ["/deploy/celery.sh"]
+    depends_on:
+      - redis
+
+  flower:
+    build:
+      context: 13-docker-compose
+    env_file:
+      - deploy.env
+    container_name: flower_app
+    command: ["/deploy/flower.sh"]
+    depends_on:
+      - redis
+      - celery
+    ports:
+      - "8888:5555"
