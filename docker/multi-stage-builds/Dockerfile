@@ -14,8 +14,8 @@ WORKDIR /app
 
 COPY --from=compile-image /root/.local /root/.local
 
-COPY ./src /app/src
-COPY ./static /app/static
+COPY src /app/src
+COPY static /app/static
 
 ENV PATH=/root/.local/bin:$PATH
 
