@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Interface</title>
+    <style>
+        body {
+            background-color: #2e2e2e;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #chat {
+            width: 600px;
+            border-radius: 10px;
+            background-color: #3c3c3c;
+            display: flex;
+            flex-direction: column;
+            height: 80%;
+            overflow: hidden;
+        }
+
+        #messages {
+            overflow-y: auto;
+            flex-grow: 1;
+            padding: 20px;
+            display: flex;
+            flex-direction: column-reverse;
+        }
+
+        .message-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+
+        .user-message {
+            background-color: #4caf50;
+            color: #fff;
+            border-radius: 5px;
+            padding: 10px;
+            margin-left: auto;
+            align-self: flex-start;
+        }
+
+        .server-message {
+            background-color: #2196F3;
+            color: #fff;
+            border-radius: 5px;
+            padding: 10px;
+            margin-right: auto;
+            align-self: flex-end;
+        }
+
+        .message-title {
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .message-links {
+            margin-left: 20px;
+        }
+
+        .message-links button {
+            display: block;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            margin-top: 5px;
+            cursor: pointer;
+        }
+
+        #messageInput {
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            outline: none;
+            font-size: 16px;
+            background-color: #444;
+            color: #fff;
+            margin-top: auto;
+            width: calc(100% - 70px);
+        }
+
+        #sendButton {
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            outline: none;
+            font-size: 16px;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+            margin-left: 10px;
+            margin-right: 10px;
+            width: 60px;
+        }
+
+        .input-container {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+        }
+
+        footer {
+            text-align: center;
+            height: 40px;
+            line-height: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div id="chat">
+        <div id="messages"></div>
+        <div class="input-container">
+            <input type="text" id="messageInput" placeholder="Inserisci la domanda...">
+            <button id="sendButton">Invia</button>
+        </div>
+        <footer>
+            Made with ❤️ by HappyBackending
+        </footer>
+    </div>
+
+    <script>
+        const ws = new WebSocket("ws://localhost:8000/ws");
+
+        ws.onopen = () => {
+            console.log("Connesso a WebSocket");
+        };
+
+        ws.onmessage = (event) => {
+            const message = JSON.parse(event.data);
+            displayMessage(message);
+        };
+
+        function sendMessage(message) {
+            ws.send(message);
+        }
+
+        function displayMessage(message) {
+            const messagesDiv = document.getElementById("messages");
+            const messageDiv = document.createElement("div");
+            messageDiv.classList.add("message-container");
+            messageDiv.classList.add(message.sender === "user" ? "user-message" : "server-message");
+
+            const titleDiv = document.createElement("div");
+            titleDiv.classList.add("message-title");
+            titleDiv.textContent = message.titolo;
+            titleDiv.addEventListener("click", () => {
+                if (message.links && message.links.length > 0) {
+                    message.links.forEach(link => {
+                        window.open(link.url, "_blank");
+                    });
+                }
+            });
+            messageDiv.appendChild(titleDiv);
+
+            if (message.links && message.links.length > 0) {
+                const linksDiv = document.createElement("div");
+                linksDiv.classList.add("message-links");
+                message.links.forEach(link => {
+                    const linkButton = document.createElement("button");
+                    linkButton.textContent = link.titolo;
+                    linkButton.addEventListener("click", () => {
+                        window.open(link.url, "_blank");
+                    });
+                    linksDiv.appendChild(linkButton);
+                });
+                messageDiv.appendChild(linksDiv);
+            }
+
+            messagesDiv.prepend(messageDiv);
+        }
+
+        const messageInput = document.getElementById("messageInput");
+        const sendButton = document.getElementById("sendButton");
+
+        sendButton.addEventListener("click", () => {
+            const message = messageInput.value.trim();
+            if (message !== "") {
+                sendMessage(JSON.stringify({ sender: "user", titolo: message }));
+                displayMessage({ sender: "user", titolo: message });
+                messageInput.value = "";
+            }
+        });
+
+        messageInput.addEventListener("keydown", (event) => {
+            if (event.key === "Enter") {
+                sendButton.click();
+            }
+        });
+    </script>
+</body>
+</html>
