@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "chat-assistant"
+version = "0.1.0"
+description = ""
+authors = ["halon176 <acc.github@halon.cc>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = {extras = ["all"], version = "^0.110.0"}
+websockets = "^12.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
