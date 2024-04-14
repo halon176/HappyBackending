@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "fastapi-performance"
+version = "0.1.0"
+description = ""
+authors = ["halon176 <acc.github@halon.cc>"]
+package-mode = false
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+fastapi = "^0.110.1"
+uvicorn = {extras = ["standard"], version = "^0.29.0"}
+orjson = "^3.10.0"
+gunicorn = "^21.2.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
