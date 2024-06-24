@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profilo Utente</title>
+    <link href="/static/styles.css" rel="stylesheet">
+</head>
+<body>
+    <h1>Profilo di {{ user.username }}</h1>
+
+    <div class="profile-container">
+        <table>
+            <tr>
+                <td><strong>Username:</strong></td>
+                <td>{{ user.username }}</td>
+            </tr>
+            <tr>
+                <td><strong>Email:</strong></td>
+                <td>{{ user.email }}</td>
+            </tr>
+            <tr>
+                <td><strong>Is Admin:</strong></td>
+                <td>{{ user.is_admin }}</td>
+            </tr>
+            <tr>
+                <td><strong>Created At:</strong></td>
+                <td>{{ user.created_at }}</td>
+            </tr>
+        </table>
+    </div>
+
+</body>
+</html>
